@@ -5,6 +5,7 @@ module.exports = {
   findUserById,
   findUserByFilter,
   register,
+  editUser,
   deleteUser
 }
 
@@ -33,4 +34,10 @@ function deleteUser (id) {
   return db('users')
     .where({ id })
     .del()
+}
+
+function editUser (changes, id) {
+  return db('users')
+    .where({ id })
+    .update(changes)
 }
