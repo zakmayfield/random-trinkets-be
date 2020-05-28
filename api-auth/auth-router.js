@@ -23,22 +23,27 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res) => {
   let { username, password } = req.body
 
-  Users.findUserByFilter({ username })
-    .first()
-    .then(user => {
-      if (user && bcrypt.compareSync(password, user.password)) {
-        const token = generateToken(user)
-        res.status(200).json({
-          message: `Welcome, ${user.username}!`,
-          token
-        })
-      } else {
-        res.status(401).json({ error: 'Invalid log in' })
-      }
-    })
-    .catch(({ name, message }) => {
-      res.status(500).json({ name, message })
-    })
+  if (!username || !password) {
+    res.status(400).json({ error: 'please fill in all of the fields' })
+  } else {
+    Users.findUserByFilter({ username })
+      .first()
+      .then(user => {
+        if (user && bcrypt.compareSync(password, user.password)) {
+          const token = generateToken(user)
+          res.status(200).json({
+            message: `Welcome, ${user.username}!`,
+            token
+          })
+        } else {
+          res.status(401).json({ error: 'username or password incorrect' })
+        }
+      })
+  }
+
+  // .catch(({ name, message }) => {
+  //   res.status(500).json({ name, message })
+  // })
 })
 
 function generateToken (user) {
