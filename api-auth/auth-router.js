@@ -58,4 +58,12 @@ function generateToken (user) {
   return jwt.sign(payload, 'whats in the booox!?', options)
 }
 
+// function logger () {
+//   console.log(
+//     `${req.method} Request to ${
+//       req.originalUrl
+//     } on ${new Date().toLocaleDateString()}`
+//   )
+// }
+
 module.exports = router

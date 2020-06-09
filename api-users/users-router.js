@@ -1,6 +1,36 @@
 const router = require('express').Router()
 
+// const cartRouter = require('../api-cart/cart-router')
+
+// router.use('/:userId/cart', cartRouter)
+
 const Users = require('./users-model')
+const Cart = require('../api-cart/cart-model')
+
+router.get('/:userId/cart', (req, res) => {
+  const { userId } = req.params
+
+  Users.getUsersCart(userId)
+    .then(cart => {
+      res.status(200).json(cart)
+    })
+    .catch(({ name, message, stack }) => {
+      res.json(500).json({ name, message, stack })
+    })
+})
+
+router.post('/:userId/cart', (req, res) => {
+  const { userId } = req.params
+  const item = {...req.body, user_id: userId}
+
+  Users.addToCart(item)
+    .then(count => {
+      res.status(201).json(count)
+    })
+    .catch(({ name, message, stack }) => {
+      res.json(500).json({ name, message, stack })
+    })
+})
 
 //get all users
 router.get('/', (req, res) => {
