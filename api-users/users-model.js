@@ -37,7 +37,7 @@ function findUserById (id) {
 
 function findUserByFilter (filter) {
   return db('users')
-    .select('username', 'password')
+    .select('username', 'password', 'id')
     .where(filter)
 }
 

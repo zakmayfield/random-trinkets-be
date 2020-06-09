@@ -29,10 +29,12 @@ router.post('/login', (req, res) => {
     Users.findUserByFilter({ username })
       .first()
       .then(user => {
+        console.log('USER FROM POST', user)
         if (user && bcrypt.compareSync(password, user.password)) {
           const token = generateToken(user)
           res.status(200).json({
             message: `Welcome, ${user.username}!`,
+            id: user.id,
             token
           })
         } else {
