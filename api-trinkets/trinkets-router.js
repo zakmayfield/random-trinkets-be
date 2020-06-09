@@ -12,4 +12,16 @@ router.get('/', (req, res) => {
     })
 })
 
+router.post('/', (req, res) => {
+  const item = req.body
+  
+  Trinkets.addToStore(item) 
+    .then(count => {
+      res.status(201).json(count)
+    })
+    .catch((name, message) => {
+      res.status(500).json({ name, message })
+    })
+})
+
 module.exports = router
