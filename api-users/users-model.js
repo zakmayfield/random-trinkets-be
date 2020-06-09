@@ -1,12 +1,27 @@
 const db = require('../data/dbConfig.js')
 
 module.exports = {
+  getUsersCart,
+  addToCart,
+
   findAllUsers,
   findUserById,
   findUserByFilter,
   register,
   editUser,
   deleteUser
+}
+
+function getUsersCart(userId) {
+  return db('cart')
+    .join('users', 'users.id', 'cart.user_id')
+    .select('cart.id', 'cart.name', 'cart.price', 'cart.description')
+    .where('cart.user_id', userId)
+}
+
+function addToCart(item){
+  return db('cart')
+    .insert(item)
 }
 
 function findAllUsers () {
