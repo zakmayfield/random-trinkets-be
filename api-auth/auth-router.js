@@ -33,10 +33,7 @@ router.post('/login', (req, res) => {
         if (user && bcrypt.compareSync(password, user.password)) {
           req.session.user = { id: user.id, username: user.username }
           const token = generateToken(user)
-          res.status(200).json({
-            message: `Welcome, ${user.username}!`,
-            token
-          })
+          res.status(200).json({ Welcome: `${user.username}!`, token, session: req.session })
         } else {
           res.status(401).json({ error: 'username or password incorrect' })
         }
