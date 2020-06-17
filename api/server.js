@@ -3,6 +3,7 @@ const helmet = require('helmet')
 const cors = require('cors')
 const session = require('express-session')
 const dbConnection = require('../data/dbConfig')
+const knexSessionStore = require('connect-session-knex')(session)
 /////
 const usersRouter = require('../api-users/users-router.js')
 const authRouter = require('../api-auth/auth-router.js')
